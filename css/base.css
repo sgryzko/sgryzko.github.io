@@ -1,0 +1,27 @@
+body {
+  background-image: url('assets/Screen1_Background.png');
+}
+header {
+  font-size: 25px;
+  text-align: center;
+}
+.result {
+  font-size: 18px;
+  font-weight: bold;
+}
+article {
+  clear: both;
+}
+section p {
+  float: left;
+}
+.video {
+  margin: 20px;
+}
+.video img {
+}
+.btn a {
+  text-decoration: none;
+}
+.lucky p {
+}
