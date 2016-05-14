@@ -57,8 +57,7 @@
       <option value="4 Bonhill St, London">Current Location</option>
     </select>
     <br>
-    <b>Waypoints:</b> <br>
-    <i>(Ctrl-Click for multiple selection)</i> <br>
+    <b>Route:</b> <br>
     <select multiple id="waypoints">
       <option value="Hampstead Heath, London">Hampstead Heath</option>
       <option value="Regent's Park, London">Regent's Park</option>
@@ -114,6 +113,7 @@
             var route = response.routes[0];
             var summaryPanel = document.getElementById('directions-panel');
             summaryPanel.innerHTML = '';
+            var distance = 0;
             // For each route, display summary information.
             for (var i = 0; i < route.legs.length; i++) {
               var routeSegment = i + 1;
@@ -121,8 +121,11 @@
                   '</b><br>';
               summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
               summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+              distance += route.legs[i].distance.value;
               summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
             }
+            summaryPanel.innerHTML += '<b>Total Distance: ' + (distance / 1000).toFixed(1) +
+                  'km</b><br>';
           } else {
             window.alert('Directions request failed due to ' + status);
           }
