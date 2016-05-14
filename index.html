@@ -81,9 +81,9 @@
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 6,
           center: {lat: 41.85, lng: -87.65}
-        calculateAndDisplayRoute(directionsService, directionsDisplay);
         });
         directionsDisplay.setMap(map);
+        calculateAndDisplayRoute(directionsService, directionsDisplay);
 
         document.getElementById('submit').addEventListener('click', function() {
           calculateAndDisplayRoute(directionsService, directionsDisplay);
