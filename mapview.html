@@ -31,9 +31,6 @@
         directionsDisplay.setMap(map);
         calculateAndDisplayRoute(directionsService, directionsDisplay);
 
-        document.getElementById('submit').addEventListener('click', function() {
-          calculateAndDisplayRoute(directionsService, directionsDisplay);
-        });
 
         var iconWidth = 210;
         var iconHeight = iconWidth / 3;
