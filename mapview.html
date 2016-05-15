@@ -7,26 +7,16 @@
     <link rel="stylesheet" media="all" href="css/mapstyle.css">
   </head>
   <body>
+  <div id="masternudge">
     <div id="logodiv">
-      <img id="logoimg" src="assets/ExploR_Logo.png" alt="Logo"/>
+      <img id="logoimg" src="assets/Map_Header.png" alt="Logo"/>
     </div>
     
       <div id="map"></div>
       <div id="right-panel">
       <div>
-      <b>Start:</b>
-      <select id="start">
-        <option value="4 Bonhill St, London">Current Location</option>
-      </select>
-      <br>
-      <b>End:</b>
-      <select id="end">
-        <option value="253a West End Lane, London">Home</option>
-      </select>
-      <br>
-        <input type="submit" id="submit">
-      </div>
-      <div id="directions-panel"></div>
+      <div id="MapFooter">
+        <img id="MapFooterimg" src="assets/Map_Footer.png">
       </div>  
 
 
@@ -163,5 +153,6 @@
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRFfnABkdUh9oKzOiQkL9QwZduEjK7SbY&callback=initMap">
     </script>
+    </div>
   </body>
 </html>
