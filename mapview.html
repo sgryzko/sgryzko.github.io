@@ -20,53 +20,61 @@
 
 
     <script>
+    var map;
+    var icons;
+    var iconToUse;
+
       function initMap() {
         var directionsService = new google.maps.DirectionsService;
         var directionsDisplay = new google.maps.DirectionsRenderer();//{suppressMarkers: true});
-        var map = new google.maps.Map(document.getElementById('map'), {
+        map = new google.maps.Map(document.getElementById('map'), {
           zoom: 11,
           center: {lat: 51.5225472, lng: -0.0856227},
           mapTypeControl: false
         });
         directionsDisplay.setMap(map);
         calculateAndDisplayRoute(directionsService, directionsDisplay);
+ 
 
-
-        var iconWidth = 210;
+        var iconWidth = 180;
         var iconHeight = iconWidth / 3;
+        var origin = new google.maps.Point(0, 0);
+        var anchor = new google.maps.Point(iconWidth * 0.4, iconHeight);
+        var scaledSize = new google.maps.Size(iconWidth, iconHeight)
 
-        var icons = {
+        icons = {
           towerBridge: {
             url: 'assets/TowerBridge.png',
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(iconWidth / 2, iconHeight),
-            scaledSize: new google.maps.Size(iconWidth, iconHeight),
-            title: 'Tower Bridge!'
+            title: 'Tower Bridge!',
+            origin: origin,
+            anchor: anchor,
+            scaledSize: scaledSize,
           },
           battersea: {
             url: 'assets/BatterseaStation.png',
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(iconWidth / 2, iconHeight),
-            scaledSize: new google.maps.Size(iconWidth, iconHeight),
-            title: 'Battersea Power Station!'
+            title: 'Battersea Power Station!',
+            origin: origin,
+            anchor: anchor,
+            scaledSize: scaledSize,
           },
           londonEye: {
             url: 'assets/LondonEye.png',
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(iconWidth / 2, iconHeight),
-            scaledSize: new google.maps.Size(iconWidth, iconHeight),
-            title: 'London Eye!'
+            title: 'London Eye!',
+            origin: origin,
+            anchor: anchor,
+            scaledSize: scaledSize,
           },
         };
 
-        var iconToUse = icons.battersea;
+       var waypoint = getParameterByName('waypoint');
 
-        var marker = new google.maps.Marker({
-          position: map.center,
-          map: map,
-          icon: iconToUse,
-          title: iconToUse.title
-        });
+       if (waypoint.search("Tower Bridge") != -1) {
+        iconToUse = icons.towerBridge;
+       } else if (waypoint.search("SE1 7PB") != -1) {
+        iconToUse = icons.londonEye;
+       } else {
+        iconToUse = icons.battersea;
+       }
       }
 
 
@@ -95,22 +103,17 @@
             var summaryPanel = document.getElementById('summary');
             summaryPanel.innerHTML = '';
             var distance = 0;
+            var lastMarker;
 
             // For each leg, display summary information.
             for (var i = 0; i < route.legs.length; i++) {
               var leg = route.legs[i];
               distance += leg.distance.value;
 
-              //makeMarker( leg.start_location, icons.towerBridge, "title" );
-              //makeMarker( leg.end_location, icons.towerBridge, 'title' );
-
-              // new google.maps.Marker({
-              //   position: map.center,
-              //   map: map,
-              //   icon: icons.towerBridge,
-              //   title: 'Hello World!'
-              // });
+              lastMarker = makeMarker( leg.end_location, iconToUse, 'title' );
             }
+
+            lastMarker.setMap(null);
 
             // summaryPanel.innerHTML += '<b>Total Distance: ' + (distance / 1000).toFixed(1) +
                   // 'km</b><br>';
@@ -131,7 +134,7 @@
       }
 
       function makeMarker( position, icon, title ) {
-        new google.maps.Marker({
+        return new google.maps.Marker({
          position: position,
          map: map,
          icon: icon,
