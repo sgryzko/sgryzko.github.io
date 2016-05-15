@@ -11,13 +11,12 @@
     <div id="logodiv">
       <img id="logoimg" src="assets/Map_Header.png" alt="Logo"/>
     </div>
-    
-      <div id="map"></div>
-      <div id="right-panel">
-      <div>
-      <div id="MapFooter">
-        <img id="MapFooterimg" src="assets/Map_Footer.png">
-      </div>  
+
+    <div id="summary"></div>
+    <div id="map"></div>
+    <div id="MapFooter">
+      <img id="MapFooterimg" src="assets/Map_Footer.png">
+    </div>  
 
 
     <script>
@@ -87,8 +86,8 @@
         }
 
         directionsService.route({
-          origin: document.getElementById('start').value,
-          destination: document.getElementById('end').value,
+          origin: "4 Bonhill St, London",
+          destination: "253a West End Lane, London",
           waypoints: waypts,
           optimizeWaypoints: true,
           travelMode: google.maps.TravelMode.DRIVING
@@ -96,35 +95,28 @@
           if (status === google.maps.DirectionsStatus.OK) {
             directionsDisplay.setDirections(response);
             var route = response.routes[0];
-            var summaryPanel = document.getElementById('directions-panel');
+            var summaryPanel = document.getElementById('summary');
             summaryPanel.innerHTML = '';
             var distance = 0;
 
             // For each leg, display summary information.
             for (var i = 0; i < route.legs.length; i++) {
               var leg = route.legs[i];
-              var routeSegment = i + 1;
-              summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
-                  '</b><br>';
-              summaryPanel.innerHTML += leg.start_address + ' to ';
-              summaryPanel.innerHTML += leg.end_address + '<br>';
               distance += leg.distance.value;
-              summaryPanel.innerHTML += leg.distance.text + '<br><br>';
-
 
               //makeMarker( leg.start_location, icons.towerBridge, "title" );
               //makeMarker( leg.end_location, icons.towerBridge, 'title' );
 
-              new google.maps.Marker({
-                position: map.center,
-                map: map,
-                icon: icons.towerBridge,
-                title: 'Hello World!'
-              });
+              // new google.maps.Marker({
+              //   position: map.center,
+              //   map: map,
+              //   icon: icons.towerBridge,
+              //   title: 'Hello World!'
+              // });
             }
 
-            summaryPanel.innerHTML += '<b>Total Distance: ' + (distance / 1000).toFixed(1) +
-                  'km</b><br>';
+            // summaryPanel.innerHTML += '<b>Total Distance: ' + (distance / 1000).toFixed(1) +
+                  // 'km</b><br>';
           } else {
             window.alert('Directions request failed due to ' + status);
           }
