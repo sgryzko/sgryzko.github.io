@@ -1,0 +1,29 @@
+#background
+{
+	position:absolute;
+	top:0px;
+	left:500px;
+	height:1920px;
+	width:1080px;
+}
+
+#backgroundimg
+{
+	width:33%;
+	height:33%;
+}
+
+#button
+{
+	position:absolute;
+	top:245px;
+	left:543px;
+	height:135px;
+	width:821px;
+}
+
+#buttonimg
+{
+	width:33%;
+	height:33%;
+}
