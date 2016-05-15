@@ -4,27 +4,37 @@
   <meta charset="utf-8">
   <title>Choose your path - App</title>
   <link rel="stylesheet" media="all" href="css/base.css">
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
 </head>
-<body>
+<body> 
+
+
+
+
+
   <header>
-    <p><img src="assets/header.png" alt="Header"/></p>
+    <img src="assets/header.png" alt="Header"/>
   </header>
   <article>
     <section>
-      <p class="video"><img src="assets/icon1.png" alt="Icon1"/></p>
-      <p class="btn"><a href="index.html"><img src="assets/go1.png" alt="Go1"/></a></p>
+      <img class="video" src="assets/icon1.png" alt="Icon1"/>
+      <a href="index.html?waypoint=&quot;Tower Bridge&quot;"><img class="btn" src="assets/go1.png" alt="Go1"/></a>
     </section>
     <section>
-      <p class="video"><img src="assets/icon1.png" alt="Icon2"/></p>
-      <p class="btn"><a href="#"><img src="assets/go1.png" alt="Go2"/></a></p>
+      <img class="video" src="assets/icon1.png" alt="Icon2"/>
+      <a href="index.html?waypoint=&quot;SE1 7PB&quot;"><img class="btn" src="assets/go1.png" alt="Go2"/></a>
     </section>
     <section>
-      <p class="video"><img src="assets/icon1.png" alt="Icon3"/></p>
-      <p class="btn"><a href="#"><img src="assets/go1.png" alt="Go3"/></a></p>
+      <img class="video" src="assets/icon1.png" alt="Icon3"/>
+      <a href="index.html?waypoint=&quot;Battersea Power Station&quot;"><img class="btn" src="assets/go1.png" alt="Go3"/></a>
     </section>
   </article>
   <article class="lucky">
-    <p class="btn"><a href="#"><img src="assets/explor.png" alt="Explor"/></a></p>
+    <a href="#"><img class="bottombtn" src="assets/explor.png" alt="Explor"/></a>
   </article>
+
+  <script type="text/javascript">
+    // $('.bottombtn').css('height', $('.video').css('height') + 'px')
+  </script>
 </body>
 </html>

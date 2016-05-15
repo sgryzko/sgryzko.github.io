@@ -4,82 +4,40 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <title>Explor</title>
-    <style>
-      #right-panel {
-        font-family: 'Roboto','sans-serif';
-        line-height: 30px;
-        padding-left: 10px;
-      }
-
-      #right-panel select, #right-panel input {
-        font-size: 15px;
-      }
-
-      #right-panel select {
-        width: 100%;
-      }
-
-      #right-panel i {
-        font-size: 12px;
-      }
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #map {
-        height: 100%;
-        float: left;
-        width: 70%;
-        height: 100%;
-      }
-      #right-panel {
-        margin: 20px;
-        border-width: 2px;
-        width: 20%;
-        float: left;
-        text-align: left;
-        padding-top: 20px;
-      }
-      #directions-panel {
-        margin-top: 20px;
-        background-color: #FFEE77;
-        padding: 10px;
-      }
-    </style>
+    <link rel="stylesheet" media="all" href="css/mapstyle.css">
   </head>
   <body>
-    <div id="map"></div>
-    <div id="right-panel">
-    <div>
-    <b>Start:</b>
-    <select id="start">
-      <option value="4 Bonhill St, London">Current Location</option>
-    </select>
-    <br>
-    <b>Route:</b> <br>
-    <select multiple id="waypoints">
-      <option value="Hampstead Heath, London">Hampstead Heath</option>
-      <option value="Regent's Park, London">Regent's Park</option>
-      <option value="Hyde Park, London">Hyde Park</option>
-    </select>
-    <br>
-    <b>End:</b>
-    <select id="end">
-      <option value="253a West End Lane, London">Home</option>
-    </select>
-    <br>
-      <input type="submit" id="submit">
+    <div id="logodiv">
+      <img id="logoimg" src="assets/ExploR_Logo.png" alt="Logo"/>
     </div>
-    <div id="directions-panel"></div>
-    </div>
+    
+      <div id="map"></div>
+      <div id="right-panel">
+      <div>
+      <b>Start:</b>
+      <select id="start">
+        <option value="4 Bonhill St, London">Current Location</option>
+      </select>
+      <br>
+      <b>End:</b>
+      <select id="end">
+        <option value="253a West End Lane, London">Home</option>
+      </select>
+      <br>
+        <input type="submit" id="submit">
+      </div>
+      <div id="directions-panel"></div>
+      </div>  
+
+
     <script>
       function initMap() {
         var directionsService = new google.maps.DirectionsService;
         var directionsDisplay = new google.maps.DirectionsRenderer;
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 6,
-          center: {lat: 41.85, lng: -87.65}
+          center: {lat: 51.5225472, lng: -0.0856227},
+          mapTypeControl: false
         });
         directionsDisplay.setMap(map);
         calculateAndDisplayRoute(directionsService, directionsDisplay);
@@ -91,15 +49,11 @@
 
       function calculateAndDisplayRoute(directionsService, directionsDisplay) {
         var waypts = [];
-        var checkboxArray = document.getElementById('waypoints');
-        for (var i = 0; i < checkboxArray.length; i++) {
-          if (checkboxArray.options[i].selected) {
-            waypts.push({
-              location: checkboxArray[i].value,
-              stopover: true
-            });
-          }
-        }
+        
+        waypts.push({
+          location: getParameterByName('waypoint'),
+          stopover: true
+        });
 
         directionsService.route({
           origin: document.getElementById('start').value,
@@ -130,6 +84,15 @@
             window.alert('Directions request failed due to ' + status);
           }
         });
+      }
+      function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
       }
     </script>
     <script async defer
