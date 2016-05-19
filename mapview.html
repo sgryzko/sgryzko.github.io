@@ -34,14 +34,18 @@
         });
         directionsDisplay.setMap(map);
         calculateAndDisplayRoute(directionsService, directionsDisplay);
+        setAttractionImage();
  
+
+      }
+
+function setAttractionImage(){
 
         var iconWidth = 180;
         var iconHeight = iconWidth / 3;
         var origin = new google.maps.Point(0, 0);
         var anchor = new google.maps.Point(iconWidth * 0.4, -5);
         var scaledSize = new google.maps.Size(iconWidth, iconHeight)
-
         icons = {
           towerBridge: {
             url: 'assets/TowerBridge.png',
@@ -65,9 +69,7 @@
             scaledSize: scaledSize,
           },
         };
-
-       var waypoint = getParameterByName('waypoint');
-
+       var waypoint = getWaypoint()[0].location;
        if (waypoint.search("Tower Bridge") != -1) {
         iconToUse = icons.towerBridge;
        } else if (waypoint.search("SE1 7PB") != -1) {
@@ -75,41 +77,33 @@
        } else {
         iconToUse = icons.battersea;
        }
-      }
 
 
+}
+          
+     
 
       function calculateAndDisplayRoute(directionsService, directionsDisplay) {
-        var waypts = [];
+
         
-        // Only add a waypoint if one has been specified.
-        if (getParameterByName('waypoint') != ""){
-          waypts.push({
-            location: getParameterByName('waypoint'),
-            stopover: true
-          });
-        }
+        
 
         directionsService.route({
           origin: "4 Bonhill St, London",
           destination: "253a West End Lane, London",
-          waypoints: waypts,
+          waypoints: getWaypoint(),
           optimizeWaypoints: true,
           travelMode: google.maps.TravelMode.DRIVING
         }, function(response, status) {
           if (status === google.maps.DirectionsStatus.OK) {
             directionsDisplay.setDirections(response);
             var route = response.routes[0];
-            var summaryPanel = document.getElementById('summary');
-            summaryPanel.innerHTML = '';
-            var distance = 0;
-            var lastMarker;
+             var lastMarker;
 
             // For each leg, display summary information.
             for (var i = 0; i < route.legs.length; i++) {
               var leg = route.legs[i];
-              distance += leg.distance.value;
-
+            
               lastMarker = makeMarker( leg.end_location, iconToUse, 'title' );
             }
 
@@ -123,14 +117,13 @@
         });
       }
 
-      function getParameterByName(name, url) {
-        if (!url) url = window.location.href;
-        name = name.replace(/[\[\]]/g, "\\$&");
+      function getWaypoint() {
+        url = window.location.href;
+        name = 'waypoint';
         var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
         results = regex.exec(url);
-        if (!results) return null;
-        if (!results[2]) return '';
-        return decodeURIComponent(results[2].replace(/\+/g, " "));
+        var decodedLocation = decodeURIComponent(results[2].replace(/\+/g, " "));
+        return [{location: decodedLocation, stopover: true} ]
       }
 
       function makeMarker( position, icon, title ) {
